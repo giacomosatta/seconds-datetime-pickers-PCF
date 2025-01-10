@@ -1,5 +1,5 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import DateTimePCF from "./DateTimePCF";
+import { DateTimePCF } from "./DateTimePCF";
 import * as React from "react";
 
 export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOutputs> {
