@@ -1,39 +1,29 @@
 import * as React from 'react';
-import { Label, DatePicker, DayOfWeek, makeStyles } from '@fluentui/react';
-import { Input, InputProps, useId } from '@fluentui/react-components';
+import { Label} from '@fluentui/react';
+import { Button, Input, InputProps, useId } from '@fluentui/react-components';
+import './DateTimePCF.css';
 
-export type DateValueProps=
-{
+export type DateValueProps = {
   yearsValue: number;
   monthsValue: number;
   daysValue: number;
   hoursValue: number;
   minutesValue: number;
   secondsValue: number;
+};
 
-}
-
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    // Use 2px gap below the label (per the design system)
-    gap: "2px",
-    // Prevent the example from taking the full width of the page (optional)
-    maxWidth: "400px",
-  },
-});
 
 export const DateTimePCF = (props: any) => {
   const inputId = useId("input");
 
-  const [yearsValue, setYValue] = React.useState("initial value");
-  const [monthsValue, setMValue] = React.useState("initial value");
-  const [daysValue, setDValue] = React.useState("initial value");
-  const [hoursValue, setHValue] = React.useState("initial value");
-  const [minutesValue, setMiValue] = React.useState("initial value");
-  const [secondsValue, setSValue] = React.useState("initial value");
-
+  const now = new Date();
+  const [yearsValue, setYValue] = React.useState(now.getFullYear().toString());
+  const [monthsValue, setMValue] = React.useState((now.getMonth() + 1).toString().padStart(2, '0'));
+  const [daysValue, setDValue] = React.useState(now.getDate().toString().padStart(2, '0'));
+  const [hoursValue, setHValue] = React.useState(now.getHours().toString().padStart(2, '0'));
+  const [minutesValue, setMiValue] = React.useState(now.getMinutes().toString().padStart(2, '0'));
+  const [secondsValue, setSValue] = React.useState(now.getSeconds().toString().padStart(2, '0'));
+  const [formattedDate, setFormattedDate] = React.useState("");
 
   const onYearChange: InputProps["onChange"] = (ev, data) => {
     if (data.value.length <= 4) {
@@ -71,20 +61,46 @@ export const DateTimePCF = (props: any) => {
     }
   };
 
+  const insertButtonClick = () => {
+    const date = `${daysValue}/${monthsValue}/${yearsValue} ${hoursValue}:${minutesValue}:${secondsValue}`;
+    setFormattedDate(date);
+  };
+
+  const nowButtonClick = () => {
+    const now = new Date();
+    setYValue(now.getFullYear().toString());
+    setMValue((now.getMonth() + 1).toString().padStart(2, '0'));
+    setDValue(now.getDate().toString().padStart(2, '0'));
+    setHValue(now.getHours().toString().padStart(2, '0'));
+    setMiValue(now.getMinutes().toString().padStart(2, '0'));
+    setSValue(now.getSeconds().toString().padStart(2, '0'));
+  };
+
   return (
-    <div>
-      <Label htmlFor={inputId}>
-        inserisci la data
-      </Label>
-      <div>
-        <Input value={yearsValue} onChange={onYearChange} id={inputId} type='number' />
-        <Input value={monthsValue} onChange={onMonthChange} id={inputId} type='number' />
-        <Input value={daysValue} onChange={onDayChange} id={inputId} type='number' />
-        <Input value={hoursValue} onChange={onHourChange} id={inputId} type='number' />
-        <Input value={minutesValue} onChange={onMinuteChange} id={inputId} type='number' />
-        <Input value={secondsValue} onChange={onSecondChange} id={inputId} type='number' />
+    <div className="container noSpinner">
+      <div className="root">
+        <Label htmlFor={inputId}>
+          Data caricamento:
+        </Label>
+        <div>
+          <Input value={daysValue} onChange={onDayChange} id={inputId} type='number' className="input" />/
+          <Input value={monthsValue} onChange={onMonthChange} id={inputId} type='number' className="input" />/
+          <Input value={yearsValue} onChange={onYearChange} id={inputId} type='number' className="input" />
+          <br></br>
+          <Input value={hoursValue} onChange={onHourChange} id={inputId} type='number' className="input" />:
+          <Input value={minutesValue} onChange={onMinuteChange} id={inputId} type='number' className="input" />:
+          <Input value={secondsValue} onChange={onSecondChange} id={inputId} type='number' className="input" />
+        </div>
+        <div className="wrapper">
+          <Button shape='circular' onClick={insertButtonClick} className="button">Inserisci</Button>
+          <Button shape='circular' onClick={nowButtonClick} className="button">Ora</Button>
+        </div>
+        {formattedDate && (
+          <div>
+            <p>{formattedDate}</p>
+          </div>
+        )}
       </div>
-      {/* Inserire pulsante che calcola l'ora e la mostra a schermo */}
     </div>
   );
 };
