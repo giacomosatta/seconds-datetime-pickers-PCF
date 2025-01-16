@@ -1,6 +1,8 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { DateTimePCF } from "./DateTimePCF";
 import * as React from "react";
+import '@fluentui/react-components/dist/css/fluentui.css';
+import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
 
 export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
@@ -35,9 +37,10 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const props = { value: new Date() };
         return React.createElement(
-            DateTimePCF ,props
+            FluentProvider,
+            { theme: teamsLightTheme },
+           React.createElement(DateTimePCF)
         );
     }
 

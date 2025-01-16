@@ -1,40 +1,48 @@
 .root {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  max-width: 400px;
-  margin: 0 auto; /* Center horizontally */
-  align-items: center; /* Center content horizontally */
-}
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 400px;
+    margin: 0 auto; /* Center horizontally */
+    align-items: center; /* Center content horizontally */
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+  max-width: 100%;
+  }
+  
+  .inputRow {
+    display: flex;
+    gap: 8px; /* Adjust the gap between inputs as needed */
+  }
+  
+  .input {
+    width: 55px; /* Adjust the width of the inputs as needed */
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .wrapper {
+    column-gap: 15px;
+    display: flex;
+    min-width: min-content;
+  }
+  
+  .noSpinner input[type=number]::-webkit-outer-spin-button,
+  .noSpinner input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center horizontally */
-  height: 100vh; /* Full viewport height */
-}
-
-.inputRow {
-  display: flex;
-  gap: 8px; /* Adjust the gap between inputs as needed */
-}
-
-.input {
-  width: 35px; /* Adjust the width of the inputs as needed */
-}
-
-.wrapper {
-  column-gap: 15px;
-  display: flex;
-  min-width: min-content;
-}
-
-.button {
-  border: 1px solid #000; /* Set the border color and style */
-}
-
-.noSpinner input[type=number]::-webkit-outer-spin-button,
-.noSpinner input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+  .full-width {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
