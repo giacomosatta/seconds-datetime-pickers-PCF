@@ -5,9 +5,9 @@ import '@fluentui/react-components/dist/css/fluentui.css';
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
 
 export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOutputs> {
-    private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
     private _container: HTMLDivElement;
+    private _dateTimeValue : Date;
 
     /**
      * Empty constructor.
@@ -29,6 +29,7 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
     ): void {
         this.notifyOutputChanged = notifyOutputChanged;
         this._container = container
+        
     }
 
     /**
@@ -40,8 +41,13 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
         return React.createElement(
             FluentProvider,
             { theme: teamsLightTheme },
-           React.createElement(DateTimePCF)
+           React.createElement(DateTimePCF, { onDateTimeChange: this.onDateTimeChange.bind(this)})
         );
+    }
+
+    private onDateTimeChange(newDateTime: string): void {
+        this._dateTimeValue = new Date(newDateTime);
+        this.notifyOutputChanged();
     }
 
 
@@ -50,7 +56,7 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
      */
     public getOutputs(): IOutputs {
-        return { };
+        return { date: this._dateTimeValue };
     }
 
     /**

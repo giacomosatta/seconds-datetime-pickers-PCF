@@ -4,15 +4,10 @@ import { Button, Input, InputProps } from "@fluentui/react-components";
 import "./DateTimePCF.css";
 
 export type DateValueProps = {
-  yearsValue: number;
-  monthsValue: number;
-  daysValue: number;
-  hoursValue: number;
-  minutesValue: number;
-  secondsValue: number;
+  onDateTimeChange: (newDateTime: string) => void;
 };
 
-export const DateTimePCF = () => {
+export const DateTimePCF: React.FC<DateValueProps> = ({onDateTimeChange}) => {
   const now = new Date();
   const [yearsValue, setYValue] = React.useState(now.getFullYear().toString());
   const [monthsValue, setMValue] = React.useState(
@@ -81,7 +76,17 @@ export const DateTimePCF = () => {
     setHValue(now.getHours().toString().padStart(2, "0"));
     setMiValue(now.getMinutes().toString().padStart(2, "0"));
     setSValue(now.getSeconds().toString().padStart(2, "0"));
+    updateDateTime();
   };
+
+  const updateDateTime = () => {
+    const dateTime = `${yearsValue}-${monthsValue}-${daysValue}T${hoursValue}:${minutesValue}:${secondsValue}`;
+    onDateTimeChange(dateTime);
+  };
+
+  React.useEffect(() => {
+    updateDateTime();
+  }, [yearsValue, monthsValue, daysValue, hoursValue, minutesValue, secondsValue]);
 
   return (
     <div className="container noSpinner">
