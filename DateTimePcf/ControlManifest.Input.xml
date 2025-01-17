@@ -18,7 +18,7 @@
       -->
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="date" display-name-key="Date" of-type="DateAndTime.DateOnly" usage="bound" />
+    <property name="date" display-name-key="Date" of-type="DateAndTime.DateAndTime" usage="bound" />
     <!--
       Property node's of-type attribute can be of-type-group attribute.
       Example:

@@ -84,7 +84,7 @@ export const DateTimePCF = () => {
   };
 
   return (
-    <div className="container noSpinner full-width">
+    <div className="container noSpinner">
       <div className="root">
         <Label>Data caricamento:</Label>
         <div>
