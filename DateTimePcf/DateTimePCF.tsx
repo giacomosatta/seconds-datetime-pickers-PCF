@@ -4,28 +4,18 @@ import { Button, Input, InputProps } from "@fluentui/react-components";
 import "./DateTimePCF.css";
 
 export type DateValueProps = {
+  initialDate: Date;
   onDateTimeChange: (newDateTime: string) => void;
 };
 
-export const DateTimePCF: React.FC<DateValueProps> = ({onDateTimeChange}) => {
-  const now = new Date();
-  const [yearsValue, setYValue] = React.useState(now.getFullYear().toString());
-  const [monthsValue, setMValue] = React.useState(
-    (now.getMonth() + 1).toString().padStart(2, "0")
-  );
-  const [daysValue, setDValue] = React.useState(
-    now.getDate().toString().padStart(2, "0")
-  );
-  const [hoursValue, setHValue] = React.useState(
-    now.getHours().toString().padStart(2, "0")
-  );
-  const [minutesValue, setMiValue] = React.useState(
-    now.getMinutes().toString().padStart(2, "0")
-  );
-  const [secondsValue, setSValue] = React.useState(
-    now.getSeconds().toString().padStart(2, "0")
-  );
-  const [formattedDate, setFormattedDate] = React.useState("");
+export const DateTimePCF: React.FC<DateValueProps> = ({ initialDate, onDateTimeChange }) => {
+  const [yearsValue, setYValue] = React.useState(initialDate.getFullYear().toString());
+  const [monthsValue, setMValue] = React.useState((initialDate.getMonth() + 1).toString().padStart(2, "0"));
+  const [daysValue, setDValue] = React.useState(initialDate.getDate().toString().padStart(2, "0"));
+  const [hoursValue, setHValue] = React.useState(initialDate.getHours().toString().padStart(2, "0"));
+  const [minutesValue, setMiValue] = React.useState(initialDate.getMinutes().toString().padStart(2, "0"));
+  const [secondsValue, setSValue] = React.useState(initialDate.getSeconds().toString().padStart(2, "0"));
+
 
   const onYearChange: InputProps["onChange"] = (ev, data) => {
     if (data.value.length <= 4) {
@@ -63,10 +53,10 @@ export const DateTimePCF: React.FC<DateValueProps> = ({onDateTimeChange}) => {
     }
   };
 
-  const insertButtonClick = () => {
-    const date = `${daysValue}/${monthsValue}/${yearsValue} ${hoursValue}:${minutesValue}:${secondsValue}`;
-    setFormattedDate(date);
-  };
+  // const insertButtonClick = () => {
+  //   const date = `${daysValue}/${monthsValue}/${yearsValue} ${hoursValue}:${minutesValue}:${secondsValue}`;
+  //   // setFormattedDate(date);
+  // };
 
   const nowButtonClick = () => {
     const now = new Date();
@@ -91,7 +81,6 @@ export const DateTimePCF: React.FC<DateValueProps> = ({onDateTimeChange}) => {
   return (
     <div className="container noSpinner">
       <div className="root">
-        <Label>Data caricamento:</Label>
         <div>
           <Input
             value={daysValue}
@@ -136,18 +125,18 @@ export const DateTimePCF: React.FC<DateValueProps> = ({onDateTimeChange}) => {
           />
         </div>
         <div className="wrapper">
-          <Button onClick={insertButtonClick}>
-            Inserisci
-          </Button>
+          {/*<Button onClick={insertButtonClick}>
+            Insert
+          </Button>*/}
           <Button onClick={nowButtonClick}>
-            Ora
+            Now
           </Button>
         </div>
-        {formattedDate && (
+      {/*  {formattedDate && (
           <div>
             <p>{formattedDate}</p>
           </div>
-        )}
+        )}*/}
       </div>
     </div>
   );

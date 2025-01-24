@@ -29,7 +29,10 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
     ): void {
         this.notifyOutputChanged = notifyOutputChanged;
         this._container = container
-        
+        const dateValue = context.parameters.date.raw;
+        console.log('Raw date from context:', dateValue); 
+        this._dateTimeValue = dateValue ? dateValue : new Date();  
+        console.log('DateTime value passed to pcf:', this._dateTimeValue); 
     }
 
     /**
@@ -41,12 +44,13 @@ export class DateTimePcf implements ComponentFramework.ReactControl<IInputs, IOu
         return React.createElement(
             FluentProvider,
             { theme: teamsLightTheme },
-           React.createElement(DateTimePCF, { onDateTimeChange: this.onDateTimeChange.bind(this)})
+           React.createElement(DateTimePCF, {initialDate:this._dateTimeValue, onDateTimeChange: this.onDateTimeChange.bind(this)})
         );
     }
 
     private onDateTimeChange(newDateTime: string): void {
         this._dateTimeValue = new Date(newDateTime);
+        console.log('DateTime value changed:', this._dateTimeValue);
         this.notifyOutputChanged();
     }
 
